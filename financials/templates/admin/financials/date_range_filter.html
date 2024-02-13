@@ -1,0 +1,30 @@
+{% load i18n %}
+
+<div class="admin-filter">
+    <h3>{% trans "Filter by Date Range" %}</h3>
+    <form method="GET" action="">
+        {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field }}
+        {% endfor %}
+        
+        <div class="field-box">
+            <label for="id_created_on__gte">{% trans "Start Date:" %}</label>
+            <input type="date" name="created_on__gte" id="id_created_on__gte" value="{{ request.GET.created_on__gte }}">
+
+        </div>
+        
+        <div class="field-box">
+            <label for="id_created_on__lt">{% trans "End Date:" %}</label>
+            <input type="date" name="created_on__lt" id="id_created_on__lt" value="{{ request.GET.created_on__lt }}">
+        </div>
+        
+        <button type="submit" class="button">{% trans "Apply" %}</button>
+        
+        <input type="hidden" name="date_range" value="custom">
+        {% for key, value in request.GET.items %}
+            {% if key != 'start_date' and key != 'end_date' and key != 'date_range' %}
+                <input type="hidden" name="{{ key }}" value="{{ value }}">
+            {% endif %}
+        {% endfor %}
+    </form>
+</div>
